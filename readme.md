@@ -8,11 +8,15 @@
 
 ### Executing Commands
 
+	<?php
+
 	$redis->set('name', 'Taylor');
 
 	$list = $redis->lrange('list', 5, 10);
 
 If you don't want to use magic methods, you may use the "run" method:
+
+	<?php
 
 	$redis->run('set', array('Taylor'));
 
