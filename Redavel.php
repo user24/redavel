@@ -55,25 +55,25 @@ class Redavel {
 	{
 		fwrite($this->connect(), $this->command($method, (array) $parameters));
 
-		$ersponse = trim(fgets($this->connection, 512));
+		$response = trim(fgets($this->connection, 512));
 
-		switch (substr($ersponse, 0, 1))
+		switch (substr($response, 0, 1))
 		{
 			case '-':
-				throw new \Exception('Redis error: '.substr(trim($ersponse), 4));
+				throw new \Exception('Redis error: '.substr(trim($response), 4));
 			
 			case '+':
 			case ':':
-				return $this->inline($ersponse);
+				return $this->inline($response);
 			
 			case '$':
-				return $this->bulk($ersponse);
+				return $this->bulk($response);
 			
 			case '*':
-				return $this->multibulk($ersponse);
+				return $this->multibulk($response);
 			
 			default:
-				throw new \Exception("Unknown response from Redis server: ".substr($ersponse, 0, 1));
+				throw new \Exception("Unknown response from Redis server: ".substr($response, 0, 1));
 		}
 	}
 
